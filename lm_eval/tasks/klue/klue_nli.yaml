@@ -1,0 +1,24 @@
+group:
+  - klue
+task: klue_nli
+dataset_path: klue
+dataset_name: nli
+output_type: multiple_choice
+training_split: train
+validation_split: validation
+fewshot_split: train
+doc_to_text: !function utils.nli_doc_to_text
+doc_to_target: label
+doc_to_choice: ["True", "Neither", "False"]
+metric_list:
+  - metric: acc
+    aggregation: mean
+    higher_is_better: True
+  - metric: f1
+    aggregation: !function utils.macro_f1_score
+    average: macro
+    hf_evaluate: true
+    higher_is_better: True
+num_fewshot: 0
+metadata:
+  version: 1.0
